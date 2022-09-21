@@ -1,0 +1,19 @@
+{
+  "name": "cit270",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000C\u0000I\u0000T\u0000 \u00002\u00007\u00000\u0000\r\u0000 \u0000_\u0000t\u0000a\u0000d\u0000a\u0000f\u0000o\u0000o\u0000d\u0000_\u0000\r\u0000 \u0000\r\u0000 \u0000\r\u0000 \u0000t\u0000e\u0000s\u0000t\u0000e\u0000r\u0000",
+  "main": "helloworld.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BenjaminMayberry/CIT270.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BenjaminMayberry/CIT270/issues"
+  },
+  "homepage": "https://github.com/BenjaminMayberry/CIT270#readme"
+}
