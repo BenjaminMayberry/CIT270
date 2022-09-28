@@ -1,1 +1,0 @@
-curl -v -d "@signon.json" -X POST -H "Content-Type:application/text" http//localhost:3000/login
