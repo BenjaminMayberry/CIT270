@@ -4,11 +4,17 @@ const {v4 : uuidv4} = require('uuid');
 const port = 3000;
 const app = express();
 const {createClient} = require('redis');
-const redisClient = createClient(
-    {
-    url:'redis://default@localhost:3000/',
-});
 const md5 = require('md5')
+
+const redisClient = createClient({
+    host: "redis-server",
+    port: 6379
+});
+// const redisClient = createClient(
+//     {
+//     Url:'redis://default@localhost:6379',
+// });
+
 app.use(bodyParser.json());
 
 app.listen(port, async ()=>{
@@ -19,6 +25,14 @@ app.listen(port, async ()=>{
 app.get('/', (req,res)=>{
     res.send("Hello World")
 });
+
+app.post("/user", (req,res)=>{
+    const newUserRewuestObject = req.body;
+    console.log('New User',JSON.stringify(newUserRewuestObject))
+    redisClient.hSet('users', req.body.email, JSON.stringify(newUserRewuestObject))
+    res.send('New user '+newUserRewuestObject.email+' added')
+}); 
+
 app.post("/login", (req,res)=>{
     const loginEmail = req.body.userName;
     console.log(JSON.stringify(req.body));
