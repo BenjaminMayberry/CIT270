@@ -1,1 +1,5 @@
 node_moduels/
+./server.cert
+./server.key
+./server_bad.cert
+./server_bad.key
