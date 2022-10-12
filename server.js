@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const https = require('https');
 const fs = require('fs')
 const {v4 : uuidv4} = require('uuid');
-const port = 3000;//4043;
+const port = 4043;
 const app = express();
 const {createClient} = require('redis');
 const md5 = require('md5');
@@ -15,30 +15,39 @@ const redisClient = createClient({
 });
 // const redisClient = createClient(
 //     {
-//     Url:'redis://default@localhost:6379',
+//     Url:'redis://default@localhost:6379', 
 // });
 
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 
 // https.createServer({
 //     key: fs.readFileSync('server.key'),
 //     cert: fs.readFileSync('server.cert'),
-//     passphrase: 'P@ssw0rd'
-// }, app).listen(port, () => {
+//     // passphrase: 'P@ssw0rd'
+// }, app).listen(port, async () => {
+//     await redisClient.connect();
 //     console.log('Listening...')
-//   }).listen(port, () => {
-        // console.log('Listening...')
-        //   })
+// });
+app.use(express.static(__dirname, { dotfiles: 'allow' } ));
 
 
-app.listen(port, async ()=>{
-    await redisClient.connect();
-    console.log("listening on port " + port);
-}); 
+app.listen(80, () => {
+    console.log('HTTP server running on port 80');
+  });
+
+
+
+// app.listen(port, async ()=>{
+//     await redisClient.connect();
+//     console.log("listening on port " + port);
+// }); 
 
 app.get('/', (req,res)=>{
     res.send("Hello World");
 });
+
+
+
 
 app.post("/user", async(req,res)=>{
     

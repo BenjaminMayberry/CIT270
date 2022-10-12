@@ -1,4 +1,4 @@
-node_moduels/
+node_modules/
 ./server.cert
 ./server.key
 ./server_bad.cert
