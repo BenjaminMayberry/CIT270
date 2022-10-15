@@ -18,22 +18,22 @@ const redisClient = createClient({
 //     Url:'redis://default@localhost:6379', 
 // });
 
-// app.use(bodyParser.json());
+app.use(bodyParser.json());
 
-// https.createServer({
-//     key: fs.readFileSync('server.key'),
-//     cert: fs.readFileSync('server.cert'),
-//     // passphrase: 'P@ssw0rd'
-// }, app).listen(port, async () => {
-//     await redisClient.connect();
-//     console.log('Listening...')
-// });
-app.use(express.static(__dirname, { dotfiles: 'allow' } ));
+https.createServer({
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.cert'),
+    // passphrase: 'P@ssw0rd'
+}, app).listen(port, async () => {
+    await redisClient.connect();
+    console.log('Listening...')
+});
+// app.use(express.static(__dirname, { dotfiles: 'allow' } ));
 
 
-app.listen(80, () => {
-    console.log('HTTP server running on port 80');
-  });
+// app.listen(80, () => {
+//     console.log('HTTP server running on port 80');
+//   });
 
 
 
