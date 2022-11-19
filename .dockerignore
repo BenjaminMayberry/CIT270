@@ -1,7 +1,8 @@
-node_modules/
 ./server.cert
 ./server.key
+./chain.pem
 ./server_bad.cert
 ./server_bad.key
-./.dockerignore
+./.gitignore
 ./SSL
+./SSl

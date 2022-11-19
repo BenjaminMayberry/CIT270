@@ -3,15 +3,15 @@ const bodyParser = require('body-parser');
 const https = require('https');
 const fs = require('fs')
 const {v4 : uuidv4} = require('uuid');
-const port = 4043;
+const port = 443;
 const app = express();
 const {createClient} = require('redis');
 const md5 = require('md5');
 const { json } = require('body-parser');
 
 const redisClient = createClient({
-    host: "redis-server",
-    port: 6379
+    url:"redis://default:dgahoiulegbrlaiusbflihasdbvliauewbvliuwabvolaiudsbvpiuqerbviqeufbiqubfeqiudbsfouyqgdvoiaugsh9q7e8f782yrt8hgq7eghq9p8shdfal77sege7823gthpqiwueg7hq!!!!!!!!!!!!!!!!!!qhjagequ8rgthoq8eiugboeuqwgeyo8eqwiurgboiqeuygfdvoqiyeugfqioeuygfq8i723efgqi8eugfbgq87gqw87eg3o8qwebuguiqegqe35d1g46q8e41g56q5e4g+89eq47g98eq7g468q35e*g7eqe*tA@34.132.105.33:6379",
+
 });
 // const redisClient = createClient(
 //     {
@@ -19,13 +19,25 @@ const redisClient = createClient({
 // });
 
 app.use(bodyParser.json());
+app.use(express.static("public"))
+
+
 
 https.createServer({
-    key: fs.readFileSync('server.key'),
-    cert: fs.readFileSync('server.cert'),
+    
+    key: fs.readFileSync('./SSL/server.key'),
+    cert: fs.readFileSync('./SSL/server.cert'),
+    ca: fs.readFileSync('./SSL/chain.pem'),
     // passphrase: 'P@ssw0rd'
 }, app).listen(port, async () => {
+    try {
     await redisClient.connect();
+    }
+    catch(err)
+    {
+        document.getElementById("demo").innerHTML = err.message;
+    }
+
     console.log('Listening...')
 });
 // app.use(express.static(__dirname, { dotfiles: 'allow' } ));
@@ -51,29 +63,30 @@ app.get('/', (req,res)=>{
 
 app.post("/user", async(req,res)=>{
     
-    const newUserRewuestObject = req.body;
-    console.log('New User',JSON.stringify(newUserRewuestObject));
+    const newUserRequestObject = req.body;
+    console.log('New User',JSON.stringify(newUserRequestObject));
     
 
     const user = await redisClient.hGet('users', req.body.email);
     // console.log(user);
     if (user)
     {
-        res.send("User allready exists");
+        console.log('User already exists',JSON.stringify(newUserRequestObject));
+        res.send("User already exists");
     }
     else
     {
-        if (newUserRewuestObject.password == newUserRewuestObject.verifyPassword)
+        if (newUserRequestObject.password == newUserRequestObject.verifyPassword)
         {
         
-        newUserRewuestObject.password = md5(newUserRewuestObject.password);
-        newUserRewuestObject.verifyPassword = md5(newUserRewuestObject.verifyPassword);
+        newUserRequestObject.password = md5(newUserRequestObject.password);
+        newUserRequestObject.verifyPassword = md5(newUserRequestObject.verifyPassword);
         
 
-        // console.log(newUserRewuestObject.password)
-        redisClient.hSet('users', req.body.email, JSON.stringify(newUserRewuestObject));
+        // console.log(newUserRequestObject.password)
+        redisClient.hSet('users', req.body.email, JSON.stringify(newUserRequestObject));
         res.status(201);
-        res.send('New user '+newUserRewuestObject.email+' added');
+        res.send('New user '+newUserRequestObject.email+' added');
         }else
         {
             res.status(400)

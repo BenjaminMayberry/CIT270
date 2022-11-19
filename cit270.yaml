@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cittwosevenzero-benjamin
+  namespace: default
+spec:
+  containers:
+  - image: artificialfloat/cittwosevenzero
+    volumeMounts:
+    - name: ssl
+      mountPath: "/usr/src/app/SSL"
+    command: ["npm"]
+    args: ["run","start"]
+    resources:
+      requests:
+        cpu: 0.125
+        memory: 500Mi
+      limits:
+        cpu: 0.125
+        memory: 600Mi
+    imagePullPolicy: IfNotPresent
+    name: cittwosevenzero
+  volumes:
+  - name: ssl
+    secret: 
+      secretName: ssl.secret.artificialfloat
+  restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cittwosevenzero-loadbalancer
+spec:
+  selector:
+    app: cittwosevenzero-benjamin
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      protocol: TCP
+    - name: https
+      port: 443
+      targetPort: 443
+      protocol: TCP
