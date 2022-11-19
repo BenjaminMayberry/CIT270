@@ -13,10 +13,6 @@ const redisClient = createClient({
     url:"redis://default:dgahoiulegbrlaiusbflihasdbvliauewbvliuwabvolaiudsbvpiuqerbviqeufbiqubfeqiudbsfouyqgdvoiaugsh9q7e8f782yrt8hgq7eghq9p8shdfal77sege7823gthpqiwueg7hq!!!!!!!!!!!!!!!!!!qhjagequ8rgthoq8eiugboeuqwgeyo8eqwiurgboiqeuygfdvoqiyeugfqioeuygfq8i723efgqi8eugfbgq87gqw87eg3o8qwebuguiqegqe35d1g46q8e41g56q5e4g+89eq47g98eq7g468q35e*g7eqe*tA@34.132.105.33:6379",
 
 });
-// const redisClient = createClient(
-//     {
-//     Url:'redis://default@localhost:6379', 
-// });
 
 app.use(bodyParser.json());
 app.use(express.static("public"))
@@ -48,11 +44,10 @@ https.createServer({
 //   });
 
 
-
-// app.listen(port, async ()=>{
-//     await redisClient.connect();
-//     console.log("listening on port " + port);
-// }); 
+//app.listen(port, async ()=>{
+//   await redisClient.connect();
+//   console.log("listening on port " + port);
+//}); 
 
 app.get('/', (req,res)=>{
     res.send("Hello World");
