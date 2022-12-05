@@ -10,7 +10,7 @@ const md5 = require('md5');
 const { json } = require('body-parser');
 
 const redisClient = createClient({
-    url:"redis://default:dgahoiulegbrlaiusbflihasdbvliauewbvliuwabvolaiudsbvpiuqerbviqeufbiqubfeqiudbsfouyqgdvoiaugsh9q7e8f782yrt8hgq7eghq9p8shdfal77sege7823gthpqiwueg7hq!!!!!!!!!!!!!!!!!!qhjagequ8rgthoq8eiugboeuqwgeyo8eqwiurgboiqeuygfdvoqiyeugfqioeuygfq8i723efgqi8eugfbgq87gqw87eg3o8qwebuguiqegqe35d1g46q8e41g56q5e4g+89eq47g98eq7g468q35e*g7eqe*tA@34.132.105.33:6379",
+    url:`redis://default:${process.env.REDIS_PASS}@redis-stedi-benjamin:6379`,
 
 });
 
@@ -31,7 +31,7 @@ https.createServer({
     }
     catch(err)
     {
-        document.getElementById("demo").innerHTML = err.message;
+       console.log(err)
     }
 
     console.log('Listening...')
@@ -115,6 +115,7 @@ app.post("/user", async(req,res)=>{
 
 
 app.post("/login", async(req,res)=>{
+    try{}catch(error){}
     const loginEmail = req.body.userName;
     console.log(JSON.stringify(req.body));
     console.log("loginEmail", loginEmail);
